@@ -1,0 +1,19 @@
+server:
+  port: 8009
+  servlet:
+    context-path: /api-eventos
+spring:
+  datasource:
+    url: jdbc:postgresql://server3.samasat.com:5432/system_eventos
+    username: postgres
+    password: P0stgres2024
+  jpa:
+    properties:
+      hibernate:      
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+jasypt:
+  encryptor:
+    password: clave_secreta
+    algorithm: PBEWITHHMACSHA512ANDAES_256

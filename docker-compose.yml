@@ -1,0 +1,153 @@
+version: '3.8'
+services:  
+  nexus:
+    image: sonatype/nexus3
+    restart: always
+    volumes:
+      - "nexus-data:/sonatype-work"
+    ports:
+      - 9081:8081    
+  config-server:
+    image: config-server
+    hostname: config-server
+    container_name: config-server
+    ports:
+      - 8081
+    volumes:
+      - C:\Users\SAMASAT_01\Documents\config\:/app/config/
+    restart: always
+    networks:
+      - microservicios
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+  eureka-server:
+    image: eureka-server
+    hostname: eureka-server
+    container_name: eureka-server
+    ports:
+      - 8761:8761
+    restart: always
+    networks:
+      - microservicios
+    depends_on:
+      - config-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+  
+  gateway-server:
+    image: gateway-server
+    hostname: gateway-server
+    container_name: gateway-server
+    ports:
+      - 8090:8090
+    restart: always
+    networks:
+      - microservicios
+    depends_on:
+      - eureka-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+  
+  servicio-oauth:    
+    image: servicio-oauth
+    hostname: servicio-oauth
+    container_name: servicio-oauth
+    ports:
+      - 9100:9100
+    restart: always
+    networks:
+      - microservicios
+    depends_on:
+      - eureka-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+  
+  servicio-consulta-pro:
+    image: servicio-consulta-pro
+    hostname: servicio-consulta-pro
+    container_name: servicio-consulta-pro
+    ports:
+      - 8004
+    restart: always
+    networks:
+      - microservicios
+    depends_on:
+      - eureka-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+  
+  servicio-envio-proposito:    
+    image: servicio-envio-proposito
+    hostname: servicio-envio-proposito
+    container_name: servicio-envio-proposito
+    ports:
+      - 8003
+    restart: always
+    networks:
+      - microservicios
+    depends_on:
+      - eureka-server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+      
+  servicio-seguridades:    
+    image: servicio-seguridades
+    hostname: servicio-seguridades
+    container_name: servicio-seguridades
+    ports:
+      - 8005
+    restart: always
+    networks:
+      - microservicios   
+    depends_on:
+      - eureka-server    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+
+  servicio-courier:    
+    image: servicio-courier
+    hostname: servicio-courier
+    container_name: servicio-courier
+    ports:
+      - 8006:8006
+    restart: always
+    networks:
+      - microservicios    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        
+  servicio-sucursales:    
+    image: servicio-sucursales
+    hostname: servicio-sucursales
+    container_name: servicio-sucursales
+    ports:
+      - 8007
+    restart: always
+    networks:
+      - microservicios     
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"  
+volumes:
+      nexus-data: {}    
+networks:
+  microservicios:

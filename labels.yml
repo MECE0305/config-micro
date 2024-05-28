@@ -1,0 +1,6 @@
+pruebass: abc
+label:
+  nombre: Nombre
+message:
+  save_ok: Registro guardado exitosamente
+  save_failed: Se produjo un error al guardar

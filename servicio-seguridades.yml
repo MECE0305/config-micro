@@ -1,0 +1,28 @@
+server:
+  port: 8005
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+spring:
+  datasource:
+    url: jdbc:postgresql://server3.samasat.com:5432/systemDEV
+    username: postgres
+    password: P0stgres2024
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application: 
+    zipkin: http://localhost:9411

@@ -1,0 +1,30 @@
+server:
+  port: 9100
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+jwt:
+  secret: NT1JszmA4kcebWfEo/HJr16yXNT1HI1Ri/SZJV4GqpQ=
+  expiration: 86400000
+  refresh-token:
+    expiration: 604800000
+spring:
+  jndi:
+    url: remote://localhost:8888
+    jndi-name: ejb:/entidades-servicios/TgenEntidadesServicesImpl!com.samasatsa.entidades.services.Entidades
+  datasource:
+    url: jdbc:postgresql://server3.samasat.com:5432/systemDEV
+    username: postgres
+    password: P0stgr35#12
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: none
